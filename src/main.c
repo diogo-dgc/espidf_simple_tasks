@@ -1,6 +1,5 @@
 #include "esp_common.h"
 #include "freertos/task.h"
-#include "gpio.h"
 
 /******************************************************************************
  * FunctionName : user_rf_cal_sector_set
@@ -58,6 +57,17 @@ void task_blink(void* ignore)
     vTaskDelete(NULL);
 }
 
+void task_adc(){
+    //Connect to TOUT Pin(Voltage Range between 0~1V)
+    while (true) {
+        uint16 adc_read = system_adc_read();
+        printf("%d\n", adc_read);
+        vTaskDelay(20);    //Read every 200milli Sec
+    }
+
+    vTaskDelete(NULL);
+}
+
 /******************************************************************************
  * FunctionName : user_init
  * Description  : entry of user application, init user function here
@@ -66,5 +76,9 @@ void task_blink(void* ignore)
 *******************************************************************************/
 void user_init(void)
 {
+    printf("SDK version:%s\n", system_get_sdk_version());
+    printf("ADC TEST");
+
     xTaskCreate(&task_blink, "startup", 2048, NULL, 1, NULL);
+    xTaskCreate(&task_adc, "adc_reader", 2048, NULL, 1, NULL);
 }
