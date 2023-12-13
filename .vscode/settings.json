@@ -5,8 +5,6 @@
         "task.h": "c",
         "esp_common.h": "c",
         "queue.h": "c",
-        "esp_system.h": "c",
-        "esp_wifi.h": "c",
-        "freertos.h": "c"
+        "esp_system.h": "c"
     }
 }

@@ -1,7 +1,5 @@
 #include "esp_common.h"
-#include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "esp_system.h"
 
 /******************************************************************************
  * FunctionName : user_rf_cal_sector_set
@@ -46,15 +44,14 @@ uint32 user_rf_cal_sector_set(void)
     return rf_cal_sec;
 }
 
-
 void task_blink(void* ignore)
 {
     gpio16_output_conf();
     while(true) {
     	gpio16_output_set(0);
-        vTaskDelay(500/portTICK_RATE_MS);
+        vTaskDelay(1000/portTICK_RATE_MS);
     	gpio16_output_set(1);
-        vTaskDelay(500/portTICK_RATE_MS);
+        vTaskDelay(1000/portTICK_RATE_MS);
     }
 
     vTaskDelete(NULL);
@@ -79,7 +76,6 @@ void task_adc(){
 *******************************************************************************/
 void user_init(void)
 {
-
     printf("SDK version:%s\n", system_get_sdk_version());
     printf("ADC TEST");
 
